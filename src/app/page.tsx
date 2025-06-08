@@ -1,5 +1,5 @@
 import { ProductType } from "@/types/ProductType";
-import Product from "./components/Productj";
+import Product from "./components/Product";
 import Stripe from 'stripe';
 
 async function getProducts(): Promise<ProductType[]> {
@@ -13,7 +13,6 @@ async function getProducts(): Promise<ProductType[]> {
       const price = await stripe.prices.list({
         product: product.id,
       });
-      
       return {
         id: product.id,
         price: price.data[0].unit_amount,
@@ -25,13 +24,11 @@ async function getProducts(): Promise<ProductType[]> {
     })
   );
 
-
   return formatedProducts;
 }
 
 export default async function Home() {
   const products = await getProducts();
-   console.log(products)
 
   return (
     <div className="max-w-7xl mx-auto pt-8 px-8 xl:px-0">
