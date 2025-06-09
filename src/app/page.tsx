@@ -1,10 +1,10 @@
 import { ProductType } from "@/types/ProductType";
 import Product from "./components/Product";
-import Stripe from 'stripe';
+import Stripe from "stripe";
 
 async function getProducts(): Promise<ProductType[]> {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
-    apiVersion: '2025-05-28.basil',
+    apiVersion: "2025-05-28.basil",
   });
 
   const products = await stripe.products.list();
@@ -34,7 +34,7 @@ export default async function Home() {
     <div className="max-w-7xl mx-auto pt-8 px-8 xl:px-0">
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-10 xl:gap-6">
         {products.map((product: ProductType) => (
-         <Product key={product.id} product={product}/>
+          <Product key={product.id} product={product} />
         ))}
       </div>
     </div>
