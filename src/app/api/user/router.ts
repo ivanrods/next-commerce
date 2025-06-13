@@ -20,7 +20,7 @@ type EventDataType = {
   first_name: string;
   last_name: string;
   email_addresses: EmailAddressType[];
-  primary_email_address_id: string;
+ primary_email_address_id: string;
   attributes: Record<string, string | number>;
 };
 
@@ -33,9 +33,9 @@ async function handler(request: Request) {
   const payload = await request.json();
   const headersList = headers();
   const heads = {
-    "svix-id": headersList.get("svix-id"),
-    "svix-timestamp": headersList.get("svix-timestamp"),
-    "svix-signature": headersList.get("svix-signature"),
+    'svix-id': headersList.get('svix-id'),
+    'svix-timestamp': headersList.get('svix-timestamp'),
+    'svix-signature': headersList.get('svix-signature'),
   };
   const wh = new Webhook(webhookSecret);
   let evt: Event | null = null;
@@ -75,7 +75,6 @@ async function handler(request: Request) {
       create: {
         externalId: id as string,
         stripeCustomerId: customer.id,
-
         attributes,
       },
       update: {

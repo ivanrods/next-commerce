@@ -14,7 +14,7 @@ function InfiniteScroll({
   const [products, setProducts] = useState<ProductType[]>(initialProducts);
   const [hasMore, setHasMore] = useState<boolean>(true);
   const [isLoading, setIsLoading] = useState<boolean>(false);
-  
+
   const [ref, inView] = useInView({
     threshold: 0,
     triggerOnce: false,

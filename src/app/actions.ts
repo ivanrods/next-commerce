@@ -1,14 +1,15 @@
 "use server";
 import { stripe } from "@/lib/stripe";
 
-
 export async function fetchProducts({
   lastProductId,
 }: {
   lastProductId?: string | undefined;
-}){
-    const params = lastProductId ? {starting_after: lastProductId, limit: 12}: {limit: 12}
-  const {data: products, has_more} = await stripe.products.list(params);
+}) {
+  const params = lastProductId
+    ? { starting_after: lastProductId, limit: 12 }
+    : { limit: 12 };
+  const { data: products, has_more } = await stripe.products.list(params);
   const formatedProducts = await Promise.all(
     products.map(async (product) => {
       const price = await stripe.prices.list({
@@ -25,5 +26,5 @@ export async function fetchProducts({
     })
   );
 
-  return {formatedProducts, has_more};
+  return { formatedProducts, has_more };
 }

@@ -14,7 +14,7 @@ export default function ProductImage({ product, fill }: ProductImageProps) {
     <Image
       src={product.image}
       fill
-      alt={product.title}
+      alt={product.name}
       onLoadingComplete={() => setLoading(false)}
       className={`object-cover  ${
         loading
@@ -27,7 +27,7 @@ export default function ProductImage({ product, fill }: ProductImageProps) {
       src={product.image}
       width={400}
       height={700}
-      alt={product.title}
+      alt={product.name}
       onLoadingComplete={() => setLoading(false)}
       className={`object-cover  ${
         loading
