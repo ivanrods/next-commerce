@@ -60,6 +60,7 @@ async function handler(request: Request) {
       primary_email_address_id,
       ...attributes
     } = evt.data;
+    console.log(primary_email_address_id)
 
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
       apiVersion: "2025-05-28.basil",
