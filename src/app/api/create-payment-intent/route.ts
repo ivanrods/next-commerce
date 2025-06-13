@@ -12,11 +12,13 @@ const calculateOrderAmout = (items: ProductType[]) => {
 
 export async function POST(req: Request) {
   const { userId } = auth;
+  console.log(userId)
   const { items, payment_intent_id } = await req.json();
   if (!userId) {
     return new Response("Unauthorzed", { status: 401 });
   }
   const customerIdTemp = "cus_SUZjaX62Lj9KXN";
+  console.log(customerIdTemp)
   const total = calculateOrderAmout(items);
 
   const orderData = {
@@ -52,6 +54,7 @@ export async function POST(req: Request) {
           where: { paymentIntentID: payment_intent_id },
           include: { products: true },
         }),
+        
         prisma.order.update({
           where: { paymentIntentID: payment_intent_id },
           data: {
@@ -69,6 +72,7 @@ export async function POST(req: Request) {
           },
         }),
       ]);
+      console.log(updated_order)
       if (!existing_order) {
         return new Response("Order not found", { status: 404 });
       }
@@ -86,6 +90,7 @@ export async function POST(req: Request) {
       data: orderData,
     });
     return Response.json({ paymenIntent }, { status: 200 });
+    console.log(newOrder)
   }
 
   console.log(items, payment_intent_id);
