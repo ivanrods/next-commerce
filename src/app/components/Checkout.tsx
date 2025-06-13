@@ -10,10 +10,12 @@ export default function Checkout() {
         'Content-Type': 'application/json',
       },
       body: JSON.stringify({
-        items: useCartStore.cart,
+        items: cartStore.cart,
         payment_intent_id: cartStore.paymentIntent,
       }),
-    });
+    }).then((res)=> {return res.json()}).then((data) => {
+      console.log(data.paymentIntent)
+    })
   }, [cartStore.cart, cartStore.paymentIntent]);
   return (
     
