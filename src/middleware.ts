@@ -1,12 +1,34 @@
+// middleware.ts
 import { clerkMiddleware } from '@clerk/nextjs/server';
+import { NextResponse } from 'next/server';
 
-export default clerkMiddleware({});
+export default clerkMiddleware({
+  // Rotas públicas: acessíveis sem login
+  publicRoutes: [
+    '/',
+    '/sign-in',
+    '/sign-up',
+    '/product(.*)',
+    '/api/webhooks/user',
+    '/api/webhooks/stripe',
+  ],
 
+  // Função executada após verificação de autenticação
+  afterAuth(auth, req) {
+    // Se a rota for privada e o usuário não estiver logado
+    if (!auth.userId && !auth.isPublicRoute) {
+      const signInUrl = new URL('/sign-in', req.url);
+      return NextResponse.redirect(signInUrl);
+    }
+
+    // Libera acesso
+    return NextResponse.next();
+  },
+});
 export const config = {
   matcher: [
-    // Skip Next.js internals and all static files, unless found in search params
-    '/((?!_next|[^?]*\\.(?:html?|css|js(?!on)|jpe?g|webp|png|gif|svg|ttf|woff2?|ico|csv|docx?|xlsx?|zip|webmanifest)).*)',
-    // Always run for API routes
+    // Aplica o middleware em todas as rotas, exceto arquivos estáticos e do _next
+    '/((?!_next|.*\\..*).*)',
     '/(api|trpc)(.*)',
   ],
 };
