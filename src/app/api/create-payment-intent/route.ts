@@ -1,61 +1,64 @@
 import { stripe } from "@/lib/stripe";
-import { ProductType } from "@/types/ProductType";
+import { ProductType } from '@/types/ProductType';
+import prisma from '@/lib/prisma';
+import { NextResponse } from 'next/server';
 import { auth } from "@clerk/nextjs/server";
-import prisma from "@/lib/prisma";
-import { NextResponse } from "next/server";
 
-const calculateOrderAmout = (items: ProductType[]) => {
+const calculateOrderAmount = (items: ProductType[]) => {
   const totalPrice = items.reduce((acc, item) => {
-    return acc + item.price! * item.quantity!;
-  }, 0);
-  return totalPrice;
-};
+    return acc + item.price! * item.quantity!
+  }, 0)
+  return totalPrice
+}
 
 export async function POST(req: Request) {
   const { userId } = await auth();
-  console.log(userId)
   const { items, payment_intent_id } = await req.json();
-  if (!userId) {
-    return new Response("Unauthorzed", { status: 401 });
+
+  if(!userId){
+    return new Response("Unauthorized", { status: 401 });
   }
-  const customerIdTemp = "cus_SUZjaX62Lj9KXN";
-  console.log(customerIdTemp)
-  const total = calculateOrderAmout(items);
+
+  const currentUser = await prisma.user.findUnique({
+    where: {
+      externalId: userId
+    }
+  })
+  if(!currentUser){
+    return new Response('User no found', {status: 404})
+  }
+  const total = calculateOrderAmount(items);
 
   const orderData = {
     user: { connect: { id: 1 } },
     amount: total,
-    currency: "brl",
-    status: "pending",
-    paymenIntentId: payment_intent_id,
+    currency: 'brl',
+    status: 'pending',
+    paymentIntentID: payment_intent_id,
     products: {
       create: items.map((item: ProductType) => ({
         name: item.name,
         description: item.description,
         quantity: item.quantity,
         price: item.price,
-        image: item.image,
-      })),
-    },
-  };
-  if (payment_intent_id) {
-    const current_intent = await stripe.paymentIntents.retrieve(
-      payment_intent_id
-    );
-    if (current_intent) {
-      const updated_intent = await stripe.paymentIntents.update(
-        payment_intent_id,
-        {
-          amount: total,
-        }
-      );
+        image: item.image
+      }))
+    }
+  }
 
-      const [existing_order, updated_order] = await Promise.all([
+  if (payment_intent_id) {
+    const current_intent = await stripe.paymentIntents.retrieve(payment_intent_id);
+
+    if (current_intent) {
+      const updated_intent = await stripe.paymentIntents.update(payment_intent_id, {
+        amount: total
+      });
+
+      const [existing_order] = await Promise.all([
         prisma.order.findFirst({
           where: { paymentIntentID: payment_intent_id },
-          include: { products: true },
+          include: { products: true }
         }),
-        
         prisma.order.update({
           where: { paymentIntentID: payment_intent_id },
           data: {
@@ -67,32 +70,31 @@ export async function POST(req: Request) {
                 description: item.description,
                 quantity: item.quantity,
                 price: item.price,
-                image: item.image,
-              })),
-            },
-          },
-        }),
+                image: item.image
+              }))
+            }
+          }        
+        })
       ]);
-      console.log(updated_order)
+
       if (!existing_order) {
         return new Response("Order not found", { status: 404 });
       }
 
-      return NextResponse.json({ paymentIntent: updated_intent }, { status: 200 });
+      return NextResponse.json({ paymentIntent: updated_intent }, { status: 200})
     }
+
   } else {
-    const paymenIntent = await stripe.paymentIntents.create({
-      amount: calculateOrderAmout(items),
-      currency: "brl",
+    const paymentIntent = await stripe.paymentIntents.create({
+      amount: calculateOrderAmount(items),
+      currency: 'brl',
       automatic_payment_methods: { enabled: true },
     });
-    orderData.paymenIntentId = paymenIntent.id;
-    const newOrder = await prisma.order.create({
-      data: orderData,
-    });
-    return NextResponse.json({ paymenIntent }, { status: 200 });
-    console.log(newOrder)
+
+    orderData.paymentIntentID = paymentIntent.id;
+
+    
+    return NextResponse.json({ paymentIntent }, { status: 200})
   }
 
-  console.log(items, payment_intent_id);
 }
