@@ -5,13 +5,14 @@ import { ProductType } from "@/types/ProductType";
 type CartState = {
   cart: ProductType[];
   addProduct: (product: ProductType) => void;
-  removeFromCart: (product: ProductType) => void;
+  removeProduct: (product: ProductType) => void;
   isOpen: boolean;
   toggleCart: () => void;
+  clearCart: () => void;
   onCheckout: string;
   setCheckout: (checkout: string) => void;
   paymentIntent: string;
-  setPaymentIntent: (paymentIntent: string) => void
+  setPaymentIntent: (paymentIntent: string) => void;
 };
 
 export const useCartStore = create<CartState>()(
@@ -34,8 +35,7 @@ export const useCartStore = create<CartState>()(
             return { cart: [...state.cart, { ...item, quantity: 1 }] };
           }
         }),
-
-      removeFromCart: (item) =>
+      removeProduct: (item) =>
         set((state) => {
           const existingProduct = state.cart.find((p) => p.id === item.id);
 
@@ -48,17 +48,17 @@ export const useCartStore = create<CartState>()(
             });
             return { cart: updatedCart };
           } else {
-            const filteredCart = state.cart.filter((p) => p.id !== item.id);
-            return { cart: filteredCart };
+            const filterdCart = state.cart.filter((p) => p.id !== item.id);
+            return { cart: filterdCart };
           }
         }),
-
       isOpen: false,
       toggleCart: () => set((state) => ({ isOpen: !state.isOpen })),
       onCheckout: "cart",
       setCheckout: (checkout) => set(() => ({ onCheckout: checkout })),
-      paymentIntent: '',
-      setPaymentIntent:(paymentIntent) => set(() => ({paymentIntent}))
+      paymentIntent: "",
+      setPaymentIntent: (paymentIntent) => set(() => ({ paymentIntent })),
+      clearCart: () => set(() => ({ cart: [] })),
     }),
     { name: "cart-storage" }
   )
