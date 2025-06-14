@@ -31,7 +31,7 @@ type EmailAddressType = {
 
 async function handler(request: Request) {
   const payload = await request.json();
-  const headersList = headers();
+  const headersList = await headers(); 
   const heads = {
     'svix-id': headersList.get('svix-id'),
     'svix-timestamp': headersList.get('svix-timestamp'),
@@ -58,7 +58,7 @@ async function handler(request: Request) {
       last_name,
       email_addresses,
       primary_email_address_id,
-      ...attributes
+      //...attributes
     } = evt.data;
     console.log(primary_email_address_id)
 
@@ -76,10 +76,10 @@ async function handler(request: Request) {
       create: {
         externalId: id as string,
         stripeCustomerId: customer.id,
-        attributes,
+        //attributes,
       },
       update: {
-        attributes,
+        //attributes,
       },
     });
   }

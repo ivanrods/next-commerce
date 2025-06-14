@@ -1,14 +1,12 @@
 import { SignUp } from "@clerk/nextjs";
 
-type SignUpPageProps = {
-  searchParams: {
-    redirectUrl: string;
-  };
-};
+export default async function SignUpPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ redirectUrl?: string }>;
+}) {
+  const { redirectUrl } = await searchParams;
 
-export default function SignUpPage({
-  searchParams: { redirectUrl },
-}: SignUpPageProps) {
   return (
     <section className="py-14">
       <div className="container mx-auto px-4">
@@ -19,3 +17,4 @@ export default function SignUpPage({
     </section>
   );
 }
+

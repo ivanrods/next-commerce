@@ -1,14 +1,12 @@
 import { SignIn } from "@clerk/nextjs";
 
-type SignInPageProps = {
-  searchParams: {
-    redirectUrl: string;
-  };
-};
+export default async function SignInPage({
+  searchParams,
+}: {
+  searchParams: Promise<{ redirectUrl?: string }>;
+}) {
+  const { redirectUrl } = await searchParams;
 
-export default function SignInPage({
-  searchParams: { redirectUrl },
-}: SignInPageProps) {
   return (
     <section className="py-14">
       <div className="container mx-auto px-4">
