@@ -3,10 +3,8 @@ import ProductImage from '@/app/components/ProductImage';
 import { formatPrice } from '@/lib/utils';
 import Stripe from 'stripe';
 
-type ProductPageProps = {
-  params: {
-    id: string;
-  };
+type Props = {
+  params: { id: string };
 };
 
 async function getProduct(id: string) {
@@ -28,10 +26,8 @@ async function getProduct(id: string) {
   };
 }
 
-export default async function ProductPage({
-  params: { id },
-}: ProductPageProps) {
-  const product = await getProduct(id);
+export default async function ProductPage({ params }: Props) {
+  const product = await getProduct(params.id);
 
   return (
     <div className='flex flex-col md:flex-row items-center max-w-7xl mx-auto gap-8 p-10'>
