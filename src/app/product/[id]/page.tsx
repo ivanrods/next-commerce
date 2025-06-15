@@ -3,11 +3,6 @@ import ProductImage from "@/app/components/ProductImage";
 import { formatPrice } from "@/lib/utils";
 import Stripe from "stripe";
 
-type ProductPageProps = {
-  params: {
-    id: string;
-  };
-};
 
 async function getProduct(id: string) {
   const stripe = new Stripe(process.env.STRIPE_SECRET_KEY!, {
