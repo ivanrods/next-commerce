@@ -20,10 +20,11 @@ generator client {
 
 // Example data model
 model User {
-  id         Int      @id @default(autoincrement())
-  externalId String   @unique
-  createdAt  DateTime @default(now())
-  updatedAt  DateTime @updatedAt
+  id       Int      @id @default(autoincrement())
+  externalId String @unique
+  attributes Json  
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
   stripeCustomerId String?
   orders   Order[]
 }
