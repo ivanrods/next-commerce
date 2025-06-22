@@ -24,10 +24,10 @@ export default function RootLayout({
   return (
     <ClerkProvider localization={ptBR}>
       <html lang="en">
-        <body className={clsx(geistSans.variable, `bg-slate-700 antialiased`)}>
+        <body className={clsx(geistSans.variable, `bg-neutral-900 antialiased`)}>
           <Hydrate>
             <Navbar />
-            <main className=" h-screen p-16">{children}</main>
+            <main className="h-screen">{children}</main>
           </Hydrate>
         </body>
       </html>

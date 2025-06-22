@@ -24,11 +24,11 @@ export default function CartDrawer() {
     >
       <div
         onClick={(e) => e.stopPropagation()}
-        className="absolute bg-slate-600 right-0 top-0 w-1/3 h-screen p-8 overflow-y-scroll"
+        className="absolute bg-neutral-800 right-0 top-0 w-1/3 h-screen p-8 overflow-y-scroll"
       >
         <button
           onClick={() => useStore.toggleCart()}
-          className="font-bold text-sm text-teal-600"
+          className="font-bold text-sm text-indigo-400"
         >
           Voltar para loja
         </button>
