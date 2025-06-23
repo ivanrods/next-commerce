@@ -34,7 +34,7 @@ export default async function ProductPage({ params }: any) {
         <div className="flex flex-col ">
           <div className="pb-4">
             <h1 className="text-2xl font-bold text-gray-300">{product.name}</h1>
-            <h2 className="text-xl text-indigo-400 font-bold">
+            <h2 className="text-xl text-neutral-400 font-bold">
               {formatPrice(product.price)}
             </h2>
           </div>

@@ -26,7 +26,7 @@ export default function Cart() {
         </svg>
         <span
           className="
-            bg-indigo-400 text-sm font-bold rounded-full 
+            bg-neutral-600 text-sm font-bold rounded-full 
             h-5 w-5 flex items-center justify-center absolute left-3 bottom-3"
         >
           {useStore.cart?.length}

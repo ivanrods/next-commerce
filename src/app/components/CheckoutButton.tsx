@@ -24,7 +24,7 @@ export default function CheckoutButton({ totalPrice }: CheckoutButtonProps) {
 
   return (
     <div>
-      <p className="text-teal-600 font-bold">
+      <p className="text-neutral-600 font-bold">
         Total: {formatPrice(totalPrice)}
       </p>
       <button

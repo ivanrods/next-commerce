@@ -46,7 +46,7 @@ function CheckoutForm({ clientSecret }: { clientSecret: string }) {
       <button
         type="submit"
         disabled={!stripe || isLoading}
-        className="bg-teal-600 text-white py-2 px-4 rounded-md">
+        className="bg-neutral-200 text-white py-2 px-4 rounded-md">
         {isLoading ? 'Carregando...' : 'Finalizar compra'}
       </button>
     </form>

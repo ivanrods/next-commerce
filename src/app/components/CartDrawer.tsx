@@ -28,7 +28,7 @@ export default function CartDrawer() {
       >
         <button
           onClick={() => useStore.toggleCart()}
-          className="font-bold text-sm text-indigo-400"
+          className="font-bold text-sm text-neutral-600"
         >
           Voltar para loja
         </button>
@@ -54,7 +54,7 @@ export default function CartDrawer() {
                 <div>
                   <h2 className="w-42 truncate">{item.name}</h2>
                   <h2>Quantidade: {item.quantity}</h2>
-                  <p className="text-teal-600 text-sm font-bold">
+                  <p className="text-neutral-600 text-sm font-bold">
                     {formatPrice(item.price)}
                   </p>
                   <button

@@ -6,14 +6,15 @@ import clsx from "clsx";
 import { ClerkProvider } from "@clerk/nextjs";
 import { ptBR } from "@clerk/localizations";
 import Hydrate from "./components/Hydrate";
+
 const geistSans = Geist({
   variable: "--font-geist-sans",
   subsets: ["latin"],
 });
 
 export const metadata: Metadata = {
-  title: "Next E-commerce",
-  description: "Next E-commerce",
+  title: "NightShift Commerce",
+  description: "NightShift Commerce",
 };
 
 export default function RootLayout({
