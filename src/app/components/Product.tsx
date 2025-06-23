@@ -10,8 +10,8 @@ type ProductProps = {
 export default function Product({ product }: ProductProps) {
   return (
     <Link href={`/product/${product.id}`}>
-      <div className="flex flex-col shadow-lg h-96 bg-neutral-800 text-gray-300 p-5 rounded-2xl">
-        <div className="relative max-h-72 flex-1">
+      <div className="flex flex-col shadow-lg h-96 bg-neutral-800 text-gray-300 p-3 rounded-2xl">
+        <div className="relative max-h-72 flex-1 rounded-t-xl overflow-hidden">
           <ProductImage product={product} fill />
         </div>
         <div className="flex justify-between font-bold mt-2">

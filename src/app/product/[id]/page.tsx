@@ -31,15 +31,15 @@ export default async function ProductPage({ params }: any) {
     <div className="h-full flex items-center w-full">
       <div className="flex flex-col md:flex-row items-center max-w-7xl xl:mx-auto gap-12 bg-neutral-800 w-full p-8 m-8 rounded-2xl">
         <ProductImage product={product} />
-        <div className="flex flex-col ">
-          <div className="pb-4">
-            <h1 className="text-2xl font-bold text-gray-300">{product.name}</h1>
-            <h2 className="text-xl text-neutral-400 font-bold">
+        <div className="flex flex-col gap-8">
+          <div >
+            <h1 className="text-2xl font-bold text-neutral-200">{product.name}</h1>
+            <h2 className="text-xl text-neutral-200 font-bold">
               {formatPrice(product.price)}
             </h2>
           </div>
-          <div className="pb-4">
-            <p className="text-sm text-gray-400">{product.description}</p>
+          <div >
+            <p className="text-sm text-neutral-300">{product.description}</p>
           </div>
           <AddCart product={product} />
         </div>
